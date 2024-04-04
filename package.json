@@ -1,6 +1,6 @@
 {
 	"name": "svelvet-against-war",
-	"version": "10.0.2",
+	"version": "10.0.2-baw.1",
 	"description": "[bots-against-war fork] A lightweight Svelte component library for building dynamic, node-based user interfaces",
 	"keywords": [
 		"svelte",

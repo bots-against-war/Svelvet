@@ -105,6 +105,7 @@
 	 * @description Prevents the graph from panning on click if false
 	 */
 	export let pannable = true;
+	export let enableAllHotkeys = true; // false = enable only navigation hotkeys (zooming, panning etc)
 
 	const dispatch = createEventDispatcher<{
 		connection: SvelvetConnectionEvent;
@@ -208,6 +209,7 @@
 		{modifier}
 		{title}
 		{contrast}
+		{enableAllHotkeys}
 		on:edgeDrop
 	>
 		{#if mermaid.length}

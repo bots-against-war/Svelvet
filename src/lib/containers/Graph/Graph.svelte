@@ -43,6 +43,7 @@
 	export let title: string;
 	export let drawer = false;
 	export let contrast = false;
+	export let enableAllHotkeys = true;
 
 	let animationFrameId: number;
 
@@ -377,22 +378,22 @@
 			fitIntoView();
 		} else if (key === 'Control') {
 			$groups['selected'].nodes.set(new Set());
-		} else if (code === 'KeyD' && e[`${modifier}Key`]) {
+		} else if (enableAllHotkeys && code === 'KeyD' && e[`${modifier}Key`]) {
 			duplicate.set(true);
 			setTimeout(() => {
 				duplicate.set(false);
 			}, 100);
-		} else if (key === 'Tab' && (e.altKey || e.ctrlKey)) {
+		} else if (enableAllHotkeys && key === 'Tab' && (e.altKey || e.ctrlKey)) {
 			selectNextNode();
-		} else if (key === 'l') {
+		} else if (enableAllHotkeys && key === 'l') {
 			theme = theme === 'light' ? 'dark' : 'light';
-		} else if (key === 'd') {
+		} else if (enableAllHotkeys && key === 'd') {
 			drawer = !drawer;
-		} else if (key === 'm') {
+		} else if (enableAllHotkeys && key === 'm') {
 			minimap = !minimap;
-		} else if (key === 'c') {
+		} else if (enableAllHotkeys && key === 'c') {
 			controls = !controls;
-		} else if (key === 'e') {
+		} else if (enableAllHotkeys && key === 'e') {
 			const node = Array.from($selected)[0];
 			graph.editing.set(node);
 		} else {
