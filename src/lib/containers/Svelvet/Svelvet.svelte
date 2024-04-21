@@ -106,6 +106,7 @@
 	 */
 	export let pannable = true;
 	export let enableAllHotkeys = true; // false = enable only navigation hotkeys (zooming, panning etc)
+	export let graphCallback: null | ((graph: GraphType) => any) = null;
 
 	const dispatch = createEventDispatcher<{
 		connection: SvelvetConnectionEvent;
@@ -136,6 +137,10 @@
 			let graphKey: GraphKey = `G-${id || graphStore.count() + 1}`;
 
 			graph = createGraph(graphKey, { zoom, direction, editable, locked, translation });
+
+			if (graphCallback !== null) {
+				graphCallback(graph);
+			}
 
 			graphStore.add(graph, graphKey);
 		}
