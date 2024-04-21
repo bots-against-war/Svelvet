@@ -17,6 +17,7 @@ import Resizer from './components/Resizer/Resizer.svelte';
 import { generateInput, generateOutput } from './utils/creators';
 import { getViewportCenter } from './utils/getters/getViewportCenter';
 import ContrastTheme from './components/ContrastTheme/ContrastTheme.svelte';
+import { graphStore } from './stores';
 export {
 	Svelvet,
 	Controls,
@@ -37,7 +38,8 @@ export {
 	generateInput,
 	generateOutput,
 	getViewportCenter,
-	ContrastTheme
+	ContrastTheme,
+	graphStore
 };
 
 export * from './types';
