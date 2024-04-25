@@ -405,7 +405,7 @@
 			controls = !controls;
 		} else if (enableAllHotkeys && key === 'e') {
 			const node = Array.from($selected)[0];
-			if ('id' in node) {  // i.e. it's really a node and not a group
+			if ('id' in node) {
 				// i.e. it's really a node and not a group
 				graph.editing.set(node);
 			}
