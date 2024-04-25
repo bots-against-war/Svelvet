@@ -105,8 +105,11 @@
 	 * @description Prevents the graph from panning on click if false
 	 */
 	export let pannable = true;
+	// custom BAW-added props
 	export let enableAllHotkeys = true; // false = enable only navigation hotkeys (zooming, panning etc)
 	export let graphCallback: null | ((graph: GraphType) => any) = null;
+	export let customMouseDownHandler: (e: MouseEvent, cursor: XYPair) => boolean = (_e, _c) => false;
+	export let customCssCursor: string | null = null;
 
 	const dispatch = createEventDispatcher<{
 		connection: SvelvetConnectionEvent;
@@ -179,6 +182,7 @@
 		target: [string | number, string | number]
 	) {
 		const sourceNodeKey: NodeKey = `N-${source[0]}`;
+		if (!graph) return;
 		const sourceNode = graph.nodes.get(sourceNodeKey);
 		if (!sourceNode) return;
 		const sourceAnchor = sourceNode.anchors.get(`A-${source[1]}/N-${source[0]}`);
@@ -215,6 +219,8 @@
 		{title}
 		{contrast}
 		{enableAllHotkeys}
+		mouseDownOnGraphHandler={customMouseDownHandler}
+		{customCssCursor}
 		on:edgeDrop
 	>
 		{#if mermaid.length}

@@ -14,7 +14,7 @@
 	import { moveElement, zoomAndTranslate } from '$lib/utils/movers';
 	import type { Writable } from 'svelte/store';
 	import type { ComponentType } from 'svelte';
-	import type { Graph, GroupBox, GraphDimensions, CSSColorString } from '$lib/types';
+	import type { Graph, GroupBox, GraphDimensions, CSSColorString, XYPair } from '$lib/types';
 	import type { Arrow, GroupKey, Group, CursorAnchor, ActiveIntervals } from '$lib/types';
 </script>
 
@@ -44,6 +44,9 @@
 	export let drawer = false;
 	export let contrast = false;
 	export let enableAllHotkeys = true;
+	export let mouseDownOnGraphHandler: (e: MouseEvent, cursor: XYPair) => boolean = (_e, _c) =>
+		false;
+	export let customCssCursor: string | null = null;
 
 	let animationFrameId: number;
 
@@ -286,6 +289,13 @@
 	}
 
 	function onMouseDown(e: MouseEvent) {
+		try {
+			if (mouseDownOnGraphHandler(e, get(cursor))) {
+				return;
+			}
+		} catch (e) {
+			// ignoring errors in user-supplied callback
+		}
 		if (!pannable && !(e.shiftKey || e.metaKey)) return;
 		if (e.button === 2) return;
 		if ($graphDOMElement) $graphDOMElement.focus();
@@ -395,7 +405,10 @@
 			controls = !controls;
 		} else if (enableAllHotkeys && key === 'e') {
 			const node = Array.from($selected)[0];
-			graph.editing.set(node);
+			if ('id' in node) {  // i.e. it's really a node and not a group
+				// i.e. it's really a node and not a group
+				graph.editing.set(node);
+			}
 		} else {
 			return; // Unhandled action: used default handler
 		}
@@ -528,7 +541,7 @@
 	{title}
 	style:width={width ? width + 'px' : '100%'}
 	style:height={height ? height + 'px' : '100%'}
-	style:cursor={pannable ? 'move' : 'default'}
+	style:cursor={customCssCursor ? customCssCursor : pannable ? 'move' : 'default'}
 	on:wheel|preventDefault={handleScroll}
 	on:mousedown|preventDefault|self={onMouseDown}
 	on:touchend|preventDefault={onTouchEnd}

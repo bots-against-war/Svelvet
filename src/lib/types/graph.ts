@@ -30,7 +30,7 @@ export interface Graph {
 	dimensions: Writable<GraphDimensions>;
 	editable: boolean;
 	direction: 'TD' | 'LR';
-	cursor: Readable<{ x: number; y: number }>;
+	cursor: Readable<XYPair>;
 	groups: Writable<Groups>;
 	edges: EdgeStore;
 	edge: ComponentType | null;
