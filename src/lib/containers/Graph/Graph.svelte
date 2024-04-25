@@ -548,7 +548,7 @@
 	on:touchstart|preventDefault|self={onTouchStart}
 	on:keydown={handleKeyDown}
 	on:keyup={handleKeyUp}
-	on:contextmenu|preventDefault={null}
+	on:contextmenu|preventDefault
 	bind:this={$graphDOMElement}
 	tabindex={0}
 >
